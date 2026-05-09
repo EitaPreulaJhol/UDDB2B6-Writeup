@@ -49,6 +49,8 @@ The device ACL restricts access to `SYSTEM` and local `Administrators`, but that
 | Authenticode status | Valid |
 | Signature type | Authenticode |
 | OS binary | False |
+| SHA256 | `9af0b89c5c54eb66e5a660b61aee7c1a25b1c92e20a310d8b16552abcf90c0b5`
+
 
 ### PE Sections:
 
