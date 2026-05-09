@@ -89,7 +89,7 @@ The strings line up cleanly with the recovered control flow: device creation, sy
 
 ## Recovered function map:
 
-Hex-Rays reported 57 functions queued and 12 successfully decompiled. The IDA database contained the renamed symbols used below.
+The IDA database contained the renamed symbols used below.
 
 | Address | Function | Role |
 |---:|---|---|
