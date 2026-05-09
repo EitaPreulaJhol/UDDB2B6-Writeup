@@ -149,7 +149,7 @@ The main dispatch routine handles 11 IOCTLs:
 
 The device uses `DO_BUFFERED_IO`, so these requests operate through the IRP system buffer. The dispatcher relies mostly on `InputBufferLength` and `OutputBufferLength` checks, then reads and writes fields in that shared buffer in place.
 
-### Recovered IOCTL contracts:
+### IOCTL definitions:
 
 | IOCTL | Input length | Output length | Notes |
 |---:|---:|---:|---|
