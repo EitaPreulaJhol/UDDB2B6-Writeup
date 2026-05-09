@@ -28,8 +28,6 @@ The Windows kernel is designed around strict boundaries between user mode and ke
 - Raw I/O ports can be read and written.
 - PCI configuration space can be read and written.
 
-The device ACL restricts access to `SYSTEM` and local `Administrators`, but that is not enough for this threat model. BYOVD abuse usually starts after an attacker has already gained elevated user-mode execution. From there, an Administrator-accessible vulnerable driver can become the bridge into kernel tampering.
-
 ## Binary profile:
 
 | Property | Value |
@@ -49,8 +47,8 @@ The device ACL restricts access to `SYSTEM` and local `Administrators`, but that
 | Authenticode status | Valid |
 | Signature type | Authenticode |
 | OS binary | False |
+| MD5 | `d4320487bf3021f2f2afcfc43d652a69`
 | SHA256 | `9af0b89c5c54eb66e5a660b61aee7c1a25b1c92e20a310d8b16552abcf90c0b5`
-
 
 ### PE Sections:
 
@@ -87,7 +85,7 @@ D:P(A;;GA;;;SY)(A;;GA;;;BA)
 \??\%ls
 ```
 
-The strings line up cleanly with the recovered control flow: device creation, symbolic link creation, mapping events, unmapping events, and an Administrator/SYSTEM-only security descriptor.
+The strings line up cleanly with the recovered control flow: device creation, symbolic link creation and mapping/unmapping events.
 
 ## Recovered function map:
 
@@ -203,8 +201,6 @@ The mapping table stores:
 | Caller PID | Checked during unmap |
 
 The mapping table has 256 entries. Each entry is 40 bytes, and the entry is considered occupied when the stored mapping size is non-zero. The unmap path searches for both the returned user VA and the caller PID before releasing the entry, which prevents one process from using the unmap IOCTL to release another process's recorded mapping. It does not reduce the exposure created by the original map primitive.
-
-### Impact:
 
 This gives an elevated user-mode caller a direct window into physical memory. Depending on the target system and memory layout, that may allow tampering with kernel code, kernel data, page tables, security product state, credential-adjacent memory, or other sensitive regions.
 
